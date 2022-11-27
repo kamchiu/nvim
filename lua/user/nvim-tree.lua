@@ -11,6 +11,9 @@ end
 local tree_cb = nvim_tree_config.nvim_tree_callback
 
 nvim_tree.setup({
+	actions = {
+		open_file = { quit_on_open = true },
+	},
 	update_focused_file = {
 		enable = true,
 		update_cwd = true,
@@ -54,9 +57,7 @@ nvim_tree.setup({
 		},
 	},
 	view = {
-    centralize_selection = true,
-		width = 40,
-		side = "left",
+		centralize_selection = true,
 		mappings = {
 			list = {
 				{ key = { "l", "<CR>", "o" }, cb = tree_cb("edit") },
@@ -66,3 +67,10 @@ nvim_tree.setup({
 		},
 	},
 })
+
+-- Shorten function name
+local keymap = vim.keymap.set
+-- Silent keymap option
+local opts = { silent = true }
+
+keymap("n", "<leader>e", ":NvimTreeToggle<CR>", opts)
