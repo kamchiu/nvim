@@ -124,11 +124,6 @@ _G.packer_plugins = {
     path = "/Users/jinchaoliu/.local/share/nvim/site/pack/packer/start/cmp_luasnip",
     url = "https://github.com/saadparwaiz1/cmp_luasnip"
   },
-  dracula = {
-    loaded = true,
-    path = "/Users/jinchaoliu/.local/share/nvim/site/pack/packer/start/dracula",
-    url = "https://github.com/dracula/vim"
-  },
   ["friendly-snippets"] = {
     loaded = true,
     path = "/Users/jinchaoliu/.local/share/nvim/site/pack/packer/start/friendly-snippets",
