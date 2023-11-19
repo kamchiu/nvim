@@ -29,11 +29,11 @@ keymap("n", "<C-Down>", ":resize +2<CR>", opts)
 keymap("n", "<C-Left>", ":vertical resize -2<CR>", opts)
 keymap("n", "<C-Right>", ":vertical resize +2<CR>", opts)
 
-keymap('n', 'j', [[v:count ? 'j' : 'gj']], { noremap = true, expr = true })
-keymap('n', 'k', [[v:count ? 'k' : 'gk']], { noremap = true, expr = true })
+keymap("n", "j", [[v:count ? 'j' : 'gj']], { noremap = true, expr = true })
+keymap("n", "k", [[v:count ? 'k' : 'gk']], { noremap = true, expr = true })
 
-keymap('n', '<C-d>', '<C-d>zz')
-keymap('n', '<C-u>', '<C-u>zz')
+keymap("n", "<C-d>", "<C-d>zz")
+keymap("n", "<C-u>", "<C-u>zz")
 
 -- Navigate buffers
 keymap("n", "<S-l>", ":bnext<CR>", opts)

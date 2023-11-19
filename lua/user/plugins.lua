@@ -1,129 +1,114 @@
-local fn = vim.fn
--- Automatically install packer
-local install_path = fn.stdpath("data") .. "/site/pack/packer/start/packer.nvim"
-if fn.empty(fn.glob(install_path)) > 0 then
-	PACKER_BOOTSTRAP = fn.system({
+-- install lazy.nvim
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+	vim.fn.system({
 		"git",
 		"clone",
-		"--depth",
-		"1",
-		"https://github.com/wbthomason/packer.nvim",
-		install_path,
+		"--filter=blob:none",
+		"--single-branch",
+		"https://github.com/folke/lazy.nvim.git",
+		lazypath,
 	})
-	print("Installing packer close and reopen Neovim...")
-	vim.cmd([[packadd packer.nvim]])
 end
+vim.opt.runtimepath:prepend(lazypath)
 
--- Autocommand that reloads neovim whenever you save the plugins.lua file
-vim.cmd([[
-  augroup packer_user_config
-    autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerSync
-  augroup end
-]])
-
--- Use a protected call so we don't error out on first use
-local status_ok, packer = pcall(require, "packer")
-if not status_ok then
-	return
-end
-
--- Have packer use a popup window
-packer.init({
-	display = {
-		open_fn = function()
-			return require("packer.util").float({ border = "rounded" })
-		end,
-	},
-	git = {
-		clone_timeout = 300, -- Timeout, in seconds, for git clones
-	},
-})
-
--- Install your plugins here
-return packer.startup(function(use)
-	use({ "wbthomason/packer.nvim" }) -- Have packer manage itself
-	use({ "nvim-lua/plenary.nvim" }) -- Useful lua functions used by lots of plugins
-	use({ "windwp/nvim-autopairs" }) -- Autopairs, integrates with both cmp and treesitter
-	use({ "windwp/nvim-ts-autotag" })
-	use("tpope/vim-surround")
-	use("tpope/vim-obsession")
-	use("ggandor/leap.nvim")
-	use({ "numToStr/Comment.nvim" })
-	use({ "JoosepAlviste/nvim-ts-context-commentstring" })
-	use({
+require("lazy").setup({
+	{ "nvim-lua/plenary.nvim" },
+	{ "ThePrimeagen/harpoon" },
+	{ "windwp/nvim-autopairs" },
+	{ "windwp/nvim-ts-autotag" },
+	{ "tpope/vim-surround" },
+	{ "tpope/vim-obsession" },
+	{ "ggandor/leap.nvim" },
+	{ "numToStr/Comment.nvim" },
+	{ "JoosepAlviste/nvim-ts-context-commentstring" },
+	{
 		"nvim-tree/nvim-tree.lua",
-		requires = {
+		dependencies = {
 			"nvim-tree/nvim-web-devicons", -- optional
 		},
-	})
-	use({ "akinsho/bufferline.nvim" })
-	use({ "moll/vim-bbye" })
-	use({ "nvim-lualine/lualine.nvim" })
-	use({ "akinsho/toggleterm.nvim" })
-	use({ "ahmedkhalf/project.nvim" })
-	use({ "lewis6991/impatient.nvim" })
-	use({ "lukas-reineke/indent-blankline.nvim" })
-	use({ "goolord/alpha-nvim" })
-	use("folke/which-key.nvim")
-
-	-- Colorschemes
-	use({ "dracula/vim", as = "dracula" })
-	-- use({ "ellisonleao/gruvbox.nvim" })
+	},
+	{ "akinsho/bufferline.nvim" },
+	{ "moll/vim-bbye" },
+	{ "nvim-lualine/lualine.nvim" },
+	{ "akinsho/toggleterm.nvim" },
+	{ "ahmedkhalf/project.nvim" },
+	{ "lewis6991/impatient.nvim" },
+	{ "lukas-reineke/indent-blankline.nvim" },
+	{ "goolord/alpha-nvim" },
+	{ "folke/which-key.nvim" },
+	{ "ellisonleao/gruvbox.nvim", priority = 1000, config = true },
+	{ "dracula/vim", name = "dracula" },
+	{
+		"j-hui/fidget.nvim",
+		opts = {
+			-- options
+		},
+	},
 
 	-- cmp plugins
-	use({ "hrsh7th/nvim-cmp" }) -- The completion plugin
-	use({ "hrsh7th/cmp-buffer" }) -- buffer completions
-	use({ "hrsh7th/cmp-path" }) -- path completions
-	use({ "saadparwaiz1/cmp_luasnip" }) -- snippet completions
-	use({ "hrsh7th/cmp-nvim-lsp" })
-	use({ "hrsh7th/cmp-nvim-lua" })
+	{ "hrsh7th/nvim-cmp" }, -- The completion plugin
+	{ "hrsh7th/cmp-buffer" }, -- buffer completions
+	{ "hrsh7th/cmp-path" }, -- path completions
+	{ "saadparwaiz1/cmp_luasnip" }, -- snippet completions
+	{ "hrsh7th/cmp-nvim-lsp" },
+	{ "hrsh7th/cmp-nvim-lua" },
+	{ "onsails/lspkind-nvim" },
 
 	-- snippets
-	use({ "L3MON4D3/LuaSnip" }) --snippet engine
-	use({ "rafamadriz/friendly-snippets" }) -- a bunch of snippets to use
+	{
+		--snippet engine
+		"L3MON4D3/LuaSnip",
+		-- follow latest release.
+		version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+		-- install jsregexp (optional!).
+		build = "make install_jsregexp",
+	},
+	{ "rafamadriz/friendly-snippets" }, -- a bunch of snippets to use
 
 	-- LSP
-	use({ "neovim/nvim-lspconfig" }) -- enable LSP
-	use({ "williamboman/mason.nvim", run = ":MasonUpdate" })
-	use({ "williamboman/mason-lspconfig.nvim" })
-	use({ "jose-elias-alvarez/null-ls.nvim" }) -- for formatters and linters
-	use({ "RRethy/vim-illuminate" })
+	{ "neovim/nvim-lspconfig", dependencies = { "nvimdev/lspsaga.nvim" } }, -- enable LSP
+	{ "williamboman/mason.nvim", build = ":MasonUpdate" },
+	{ "williamboman/mason-lspconfig.nvim" },
+	{ "jose-elias-alvarez/null-ls.nvim" }, -- for formatters and linters
+	{
+		"nvimdev/lspsaga.nvim",
+		config = function()
+			require("lspsaga").setup({})
+		end,
+	},
+	-- automatically highlighting other uses of the word under the cursor
+	{ "RRethy/vim-illuminate" },
 
 	-- Telescope
-	use({ "nvim-telescope/telescope.nvim" })
+	{ "nvim-telescope/telescope.nvim" },
+	{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 
 	-- Treesitter
-	use({
+	{
 		"nvim-treesitter/nvim-treesitter",
-		run = function()
-			local ts_update = require("nvim-treesitter.install").update({ with_sync = true })
-			ts_update()
-		end,
-	})
+	},
+	{
+		"nvim-treesitter/nvim-treesitter-context",
+	},
 
 	-- MD file preview
 	-- install without yarn or npm
-	use({
+	{
 		"iamcco/markdown-preview.nvim",
-		run = function()
+		build = function()
 			vim.fn["mkdp#util#install"]()
 		end,
-	})
-	use({ "dhruvasagar/vim-table-mode" }) -- markdown table format
-	use({ "vimwiki/vimwiki" })
+	},
+	-- { "dhruvasagar/vim-table-mode" }, -- markdown table format
+	-- { "vimwiki/vimwiki" },
 
 	-- Git
-	use({ "lewis6991/gitsigns.nvim" })
+	{ "lewis6991/gitsigns.nvim" },
+	{ "tpope/vim-fugitive" },
 
 	-- DAP
-	use({ "mfussenegger/nvim-dap", commit = "6b12294a57001d994022df8acbe2ef7327d30587" })
-	use({ "rcarriga/nvim-dap-ui", commit = "1cd4764221c91686dcf4d6b62d7a7b2d112e0b13" })
-	use({ "ravenxrz/DAPInstall.nvim", commit = "8798b4c36d33723e7bba6ed6e2c202f84bb300de" })
-
-	-- Automatically set up your configuration after cloning packer.nvim
-	-- Put this at the end after all plugins
-	if PACKER_BOOTSTRAP then
-		require("packer").sync()
-	end
-end)
+	{ "mfussenegger/nvim-dap" },
+	{ "rcarriga/nvim-dap-ui" },
+	{ "ravenxrz/DAPInstall.nvim" },
+})

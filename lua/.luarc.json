@@ -1,0 +1,29 @@
+{
+    "workspace.library": [
+        "/home/kamchiu/.config/nvim",
+        "/home/kamchiu/.local/share/nvim/site",
+        "/home/kamchiu/.local/share/nvim/lazy/lazy.nvim",
+        "/home/kamchiu/.local/share/nvim/lazy/schemastore.nvim",
+        "/home/kamchiu/.local/share/nvim/lazy/fidget.nvim",
+        "/home/kamchiu/.local/share/nvim/lazy/cmp-nvim-lsp",
+        "/home/kamchiu/.local/share/nvim/lazy/mason-lspconfig.nvim",
+        "/home/kamchiu/.local/share/nvim/lazy/mason.nvim",
+        "/home/kamchiu/.local/share/nvim/lazy/nvim-lspconfig",
+        "/home/kamchiu/.local/share/nvim/lazy/nvim-web-devicons",
+        "/home/kamchiu/.local/share/nvim/lazy/lualine.nvim",
+        "/home/kamchiu/.local/share/nvim/lazy/gitsigns.nvim",
+        "/home/kamchiu/.local/share/nvim/lazy/completion-treesitter",
+        "/home/kamchiu/.local/share/nvim/lazy/vim-fugitive",
+        "/home/kamchiu/.local/share/nvim/lazy/harpoon",
+        "/home/kamchiu/.local/share/nvim/lazy/telescope-fzf-native.nvim",
+        "/home/kamchiu/.local/share/nvim/lazy/plenary.nvim",
+        "/home/kamchiu/.local/share/nvim/lazy/popup.nvim",
+        "/home/kamchiu/.local/share/nvim/lazy/telescope.nvim",
+        "/usr/share/nvim/runtime",
+        "/usr/lib/nvim",
+        "/home/kamchiu/.local/state/nvim/lazy/readme",
+        "/home/kamchiu/.local/share/nvim/lazy/cmp-nvim-lsp/after",
+        "${3rd}/luv/library",
+        "${3rd}/luassert/library"
+    ]
+}
